@@ -50,7 +50,7 @@
                 <tr>
                   <th>Serial No</th>
                   <th>Tag Name</th>
-                  <th>Slug</th>
+                  <th>Slug</th> 
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
