@@ -21,7 +21,6 @@ class HomeController extends Controller
         $posts = $tag->posts();
         return view('user.blog',compact('posts'));
     }
-
     public function category(category $category)
     {
         $posts = $category->posts();

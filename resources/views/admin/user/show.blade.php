@@ -10,10 +10,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Blank page
-        <small>it all starts here</small>
-      </h1>
+      @include('admin.layouts.pageHead')
+
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Examples</a></li>
@@ -28,8 +26,9 @@
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Users</h3>
-          <a class='col-lg-offset-5 btn btn-success' href="{{ route('user.create') }}">Add New</a>
 
+          <a class='col-lg-offset-5 btn btn-success' href="{{ route('user.create') }}">Add New</a>
+          @include('includes.messages')
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
@@ -49,8 +48,9 @@
                 <thead>
                 <tr>
                   <th>Serial No</th>
-                  <th>Tag Name</th>
-                  <th>Slug</th>
+                  <th>User Name</th>
+                  <th>Assigned Roles</th>
+                  <th>Status</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -61,6 +61,12 @@
                     <tr>
                       <td>{{ $loop->index + 1  }}</td>
                       <td>{{ $user->name }} </td>
+                      <td>
+                        @foreach ($user->roles as $role)
+                            {{ $role->name }},
+                        @endforeach
+                      </td>
+                      <td>{{ $user->status? 'Active':'Not Active' }} </td>
                       <td><a href="{{ route('user.edit',$user->id) }}"><span class="glyphicon glyphicon-edit" ></span></a></td>
                       <td>
                           <form id="delete-form-{{ $user->id }}" method="post" action="{{ route('user.destroy', $user->id) }}" >

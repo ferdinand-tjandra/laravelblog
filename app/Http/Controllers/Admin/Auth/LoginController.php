@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Model\admin\admin;
 
 class LoginController extends Controller
 {
@@ -49,6 +50,25 @@ class LoginController extends Controller
          }
 
          return $this->sendFailedLoginResponse($request);
+
+     }
+
+     protected function credentials(Request $request)
+     {
+        $admin = admin::where('email',$request->email)->first();
+
+        if(count($admin))
+        {
+            if($admin->status == 0)
+            {
+                return ['email'     =>'Inactive','password'  =>'You are not an active person, please contact admin'];
+            }else{
+                return ['email'=>$request->email, 'password'=>$request->password, 'status'=>1];
+            }
+        }
+
+        return $request->only($this->username(), 'password');
+
 
      }
 

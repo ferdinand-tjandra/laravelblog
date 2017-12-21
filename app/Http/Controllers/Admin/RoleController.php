@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,6 +55,7 @@ class RoleController extends Controller
         $role = new role;
         $role->name = $request->name;
         $role->save();
+        $role->permissions()->sync($request->permission);
         return redirect(route('role.index'));
     }
 
@@ -85,7 +96,7 @@ class RoleController extends Controller
       $this->validate($request,[
         'name' => 'required|max:50'
       ]);
-      $role = new role;
+      $role = role::find($id);
       $role->name = $request->name;
       $role->save();
       $role->permissions()->sync($request->permission);
